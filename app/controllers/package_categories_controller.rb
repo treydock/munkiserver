@@ -1,5 +1,6 @@
-class PackageCategoriesController < ApplicationController
-  layout "admin_sections"
+# Inherits from AdminController
+class PackageCategoriesController < AdminController
+  set_tab :package_categories
 
   def index
     @package_categories = PackageCategory.all

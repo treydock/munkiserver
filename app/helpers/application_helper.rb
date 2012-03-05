@@ -264,4 +264,8 @@ module ApplicationHelper
   def principal_list_item(principal, opts={})
     render :partial => 'shared/principal_list_item', :locals => {:principal => principal, :disabled => opts[:disabled]}
   end
+
+  def is_admin_namespace?
+    request.request_uri.split("/").second == "admin"
+  end
 end

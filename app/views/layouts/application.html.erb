@@ -66,7 +66,7 @@
 				</li>
 				<% if can? :manage, :admin %>
 					<li class="dir">
-						<%= link_to "Admin", admin_path %>
+						<%= link_to "Admin", admin_settings_path %>
 					</li>
 				<% end %>
 				<% if logged_in? %>
@@ -154,6 +154,17 @@
 		<%= yield :dashboard %>
 	<div id="sidebar" class="span-6 last">
 		<%= render :partial => "shared/sidebar" %>
+    <!-- If URL begins with admin, show tabs in layout
+         Alternative is to use seperate layout -->
+    <% if is_admin_namespace? %>
+      <%= content_tag :div, :id => "admin_tabs" do %>
+        <%= tabs_tag(:builder => MenuTabsBuilder) do |tab| %>
+          <%= tab.settings   "Settings", admin_settings_path %>
+          <%= tab.package_categories   "Package Categories", package_categories_path %>
+          <%= tab.permissions   "Permissions", permissions_path %>
+        <% end %>
+      <% end %>
+    <% end %>
 		<%= yield :sidebar %>
 	</div>
 	

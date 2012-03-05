@@ -1,6 +1,11 @@
+#####
+# Put actions and authorization before_filter here
+# for all admin sections
+####
 class AdminController < ApplicationController
-  skip_before_filter :load_singular_resource
-  layout "admin"
+# Alternative to use of helper is_admin_namespace? in the application layout
+#  layout "admin"
+  before_filter :authorize_resource
 
   def index
   end

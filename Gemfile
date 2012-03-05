@@ -12,7 +12,7 @@ gem "plist"
 gem "cancan"
 gem "highline"
 gem "newrelic_rpm", :group => :production
-gem "tabulous"
+gem "tabs_on_rails"
 gem "formtastic"
 
 group :development do

@@ -1,6 +1,7 @@
-class SettingsController < ApplicationController
+# Inherits from AdminController
+class SettingsController < AdminController
   skip_before_filter :load_singular_resource
-  layout "admin_sections"
+  set_tab :settings
 
   def index
   end

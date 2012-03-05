@@ -1,33 +1,11 @@
-<%= form_for(@package_category) do |f| %>
-  <% if @package_category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@package_category.errors.count, "error") %> prohibited this package_category from being saved:</h2>
-
-      <ul>
-      <% @package_category.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+<%= semantic_form_for @package_category, :html => { :multipart => true } do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :description %>
+    <%= f.input :new_icon, :as => :file,
+          :hint => ( f.template.image_tag(@package_category.icon.url(:tiny), :class => "thumbnail") if @package_category.icon ) %>
   <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :icon_id %><br />
-    <%= f.file_field :icon_id %>
-  </div>
-  <div class="field">
-    <%= f.label "Current icon" %><br />
-    <%= image_tag @package_category.icon.url(:tiny), :class => "thumbnail" if @package_category.icon %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.actions do %>
+    <%= f.action :submit, :button_html => { :value => "Update" } %>
+  <% end %>
 <% end %>

@@ -3,6 +3,7 @@ class Icon < ActiveRecord::Base
   has_many :packages
   has_many :computer_models
   has_many :version_tracker
+  has_many :package_categories
   # Not ready for these to have icons yet
   # has_many :computers
   # has_many :bundles

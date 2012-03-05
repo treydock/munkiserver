@@ -1,5 +1,5 @@
-class PermissionsController < ApplicationController
-  layout "admin_sections"
+class PermissionsController < AdminController
+  set_tab :permissions
 
   def index
     @principals = User.all + UserGroup.all
