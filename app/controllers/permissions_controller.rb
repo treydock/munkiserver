@@ -1,4 +1,6 @@
 class PermissionsController < ApplicationController
+  layout "admin_sections"
+
   def index
     @principals = User.all + UserGroup.all
     @units = Unit.where(:id => current_user.permission_unit_ids)

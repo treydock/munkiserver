@@ -78,6 +78,8 @@ Munki::Application.routes.draw do
     match 'install_items/edit_multiple/:computer_id' => 'install_items#edit_multiple', :as => "edit_multiple_install_items", :via => :get
     match 'install_items/update_multiple' => 'install_items#update_multiple', :as => "update_multiple_install_items", :via => :put
   end
+
+  resources :package_categories
   
   match 'dashboard' => "dashboard#index", :as => "dashboard"
   match 'dashboard/widget/:name' => 'dashboard#widget', :as => "widget"
@@ -85,6 +87,9 @@ Munki::Application.routes.draw do
   match "permissions" => "permissions#index", :as => "permissions", :via => "GET"
   match "permissions/edit/:principal_pointer(/:unit_id)" => "permissions#edit", :as => "edit_permissions", :via => "GET"
   match "permissions" => "permissions#update", :as => "update_permissions", :via => "PUT"
+
+  match "admin" => "admin#index", :as => "admin", :via => "GET"
+  match "admin/settings" => "settings#index", :as => "admin_settings", :via => "GET"
   
   root :to => redirect("/login")
 end
