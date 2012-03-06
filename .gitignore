@@ -11,3 +11,6 @@ db/*.sqlite3
 log/*.log
 tmp/**/*
 tmp/
+
+.rvmrc
+config/setup_load_paths.rb
