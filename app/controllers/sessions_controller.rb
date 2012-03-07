@@ -1,8 +1,10 @@
-class SessionsController < ApplicationController
-  skip_before_filter :require_login, :only => ['new','create','destroy']
+#class SessionsController < ApplicationController
+class SessionsController < Devise::SessionsController
   skip_before_filter :load_singular_resource
   skip_before_filter :require_valid_unit
 
+  logger.debug "SESSION CONTROLLER HIT"
+=begin
   def new
     redirect_to dashboard_path if logged_in?
   end
@@ -33,6 +35,7 @@ class SessionsController < ApplicationController
     flash[:notice] = "You have been logged out of your session"
     redirect_to login_path
   end
+=end
   
   private
   def authorize_resource

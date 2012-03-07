@@ -1,4 +1,12 @@
 Munki::Application.routes.draw do  
+
+  # Session
+  devise_for :users, :skip => [:sessions], :path_names => { :sign_in => 'login', :sign_out => 'logout' } do
+    get '/login' => 'sessions#new', :as => :new_user_session
+    post '/login' => 'sessions#create', :as => :user_session
+    get '/logout' => 'sessions#destroy', :as => :destroy_user_session
+  end
+
   resources :units, :except => [:show] do
     member do
       get 'settings/edit' => 'unit_settings#edit'
@@ -7,11 +15,6 @@ Munki::Application.routes.draw do
   end
   
   resources :users, :except => [:show]
-  
-  # Session
-  match '/login' => "sessions#new"
-  match 'create_session' => 'sessions#create'
-  match '/logout' => 'sessions#destroy'
   
   # Computer checkin URL
   match 'checkin/:id' => 'computers#checkin', :via => :post
@@ -86,5 +89,5 @@ Munki::Application.routes.draw do
   match "permissions/edit/:principal_pointer(/:unit_id)" => "permissions#edit", :as => "edit_permissions", :via => "GET"
   match "permissions" => "permissions#update", :as => "update_permissions", :via => "PUT"
   
-  root :to => redirect("/login")
+  root :to => "dashboard#index"
 end

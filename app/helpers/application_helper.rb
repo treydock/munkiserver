@@ -105,6 +105,7 @@ module ApplicationHelper
     @current_unit ||= Unit.where(:shortname => params[:unit_shortname]).first
   end
   
+=begin
   def current_user
     @current_user ||= User.find_by_username(session[:username])
   end
@@ -112,6 +113,7 @@ module ApplicationHelper
   def logged_in?
     current_user.present?
   end
+=end
     
   # Get current environment based on session[:environment_id] or value of 
   # Environment.default_view.  Change environment by passing param[:eid] to 

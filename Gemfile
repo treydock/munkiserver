@@ -13,6 +13,10 @@ gem "cancan"
 gem "highline"
 gem "newrelic_rpm", :group => :production
 
+# Authentication
+gem "devise"
+#gem "omniauth-cas"
+
 group :development do
   gem "textmate_backtracer"
 end

@@ -69,8 +69,8 @@
 						<%= link_to "Permissions", permissions_path %>
 					</li>
 				<% end %>
-				<% if logged_in? %>
-					<li><%= link_to("Logout", logout_path) %> (<%= link_to current_user, edit_user_path(current_user) %>)</li>
+				<% if user_signed_in? %>
+					<li><%= link_to("Logout", destroy_user_session_path) %> (<%= link_to current_user, edit_user_path(current_user) %>)</li>
 				<% end %>
 			</ul>
 		</div>

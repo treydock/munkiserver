@@ -1,6 +1,17 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable, :recoverable and :omniauthable
+#  devise :database_authenticatable, :omniauthable,
+  devise :database_authenticatable,
+         :rememberable, :trackable, :validatable #, :authentication_keys => [ :username ]
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username
+
+  alias :devise_valid_password? :valid_password?
+
   validates_length_of :username, :within => 3..40
   validates_length_of :password, :in => 5..24, :if => :password_changed?, :message => "must be between 5-24 characters"
   validates_presence_of :username, :email
@@ -11,7 +22,6 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "address doesn't look valid"
   
   attr_protected :id, :salt
-  attr_accessor :password
 
   has_many :user_group_memberships, :as => :principal
   has_many :groups, :through => :user_group_memberships, :source => :user_group
@@ -33,6 +43,7 @@ class User < ActiveRecord::Base
     return s
   end
   
+=begin
   # Combine the pass and salt and return an encrypted string
   def self.encrypt(pass, salt)
     Digest::SHA1.hexdigest(pass + salt)
@@ -55,7 +66,24 @@ class User < ActiveRecord::Base
     u = find_by_username(username)
     return u if (u != nil) and (User.encrypt(pass, u.salt) == u.hashed_password)
   end
-  
+=end
+
+  ##########
+  # Check if user is using a valid devise password
+  # If not using devise password use legacy authentication method
+  ##########
+  def valid_password?(password)
+    begin
+      devise_valid_password?(password)
+    rescue BCrypt::Errors::InvalidHash
+      return false unless Digest::SHA1.hexdigest(password + self.salt) == self.encrypted_password
+      logger.info "User #{email} is using the old password hashing method, updating attribute."
+      # Save as devise password
+      self.password = password
+      true
+    end
+  end
+
   # A to string method
   def to_s(style = nil)
     username
