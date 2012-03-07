@@ -80,6 +80,7 @@ GEM
       guard (>= 0.8.3)
     guard-rspec (0.5.10)
       guard (>= 0.8.4)
+    hashie (1.2.0)
     highline (1.6.2)
     i18n (0.5.0)
     json (1.6.4)
@@ -96,6 +97,13 @@ GEM
     multi_json (1.0.4)
     newrelic_rpm (3.2.0)
     nokogiri (1.5.0)
+    omniauth (1.0.3)
+      hashie (~> 1.2)
+      rack
+    omniauth-cas (0.0.5)
+      addressable (~> 2.2)
+      nokogiri (~> 1.5)
+      omniauth (~> 1.0.2)
     orm_adapter (0.0.6)
     paperclip (2.4.1)
       activerecord (>= 2.3.0)
@@ -196,6 +204,8 @@ DEPENDENCIES
   launchy
   newrelic_rpm
   nokogiri
+  omniauth
+  omniauth-cas
   paperclip
   plist
   pry-rails

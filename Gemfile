@@ -15,7 +15,8 @@ gem "newrelic_rpm", :group => :production
 
 # Authentication
 gem "devise"
-#gem "omniauth-cas"
+gem "omniauth"
+gem "omniauth-cas"
 
 group :development do
   gem "textmate_backtracer"
