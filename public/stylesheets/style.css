@@ -305,7 +305,7 @@ tbody tr td img:hover{
 	line-height:16px;	
 }
 
-.warning {
+.warning, .alert {
 	background-image:url("../images/warning_icon.png");
 	background-repeat:no-repeat;
 	background-position:center left;

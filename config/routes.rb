@@ -89,5 +89,5 @@ Munki::Application.routes.draw do
   match "permissions/edit/:principal_pointer(/:unit_id)" => "permissions#edit", :as => "edit_permissions", :via => "GET"
   match "permissions" => "permissions#update", :as => "update_permissions", :via => "PUT"
   
-  root :to => "dashboard#index"
+  root :to => redirect("/login")
 end

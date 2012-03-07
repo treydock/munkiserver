@@ -1,5 +1,6 @@
 #class SessionsController < ApplicationController
 class SessionsController < Devise::SessionsController
+  skip_before_filter :authenticate_user!
   skip_before_filter :load_singular_resource
   skip_before_filter :require_valid_unit
 
