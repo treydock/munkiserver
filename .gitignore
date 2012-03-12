@@ -17,7 +17,3 @@ tmp/
 .rvmrc
 config/newrelic.yml
 config/setup_load_paths.rb
-
-config/settings.local.yml
-config/settings/*.local.yml
-config/environments/*.local.yml

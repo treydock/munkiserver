@@ -19,6 +19,10 @@ gem "devise"
 gem "omniauth"
 gem "omniauth-cas"
 
+# Configuration
+gem "configurable_engine", :git => "git://github.com/treydock/configurable_engine.git"
+gem "rails_config"
+
 gem "newrelic_rpm"
 gem "highcharts-rails", "~> 2.1.9"
 gem "dynamic_form" # enabling this should allow the removal of vendor/dynamic_form
