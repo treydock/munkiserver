@@ -1,7 +1,9 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_filter :load_singular_resource
+  skip_before_filter :authorize_resource
+  skip_before_filter :require_valid_unit
 
   def cas
-    logger.debug "DEBUG ENV #{request.env}"
     @user = User.find_for_cas_oauth(request.env["omniauth.auth"], current_user)
 
     if @user.persisted?

@@ -13,12 +13,12 @@ class User < ActiveRecord::Base
   alias :devise_valid_password? :valid_password?
 
   validates_length_of :username, :within => 3..40
-  validates_length_of :password, :in => 5..24, :if => :password_changed?, :message => "must be between 5-24 characters"
+#  validates_length_of :password, :in => 5..24, :if => :password_changed?, :message => "must be between 5-24 characters"
   validates_presence_of :username, :email
-  validates_presence_of :salt, :message => "is missing. New users require a password."
-  validates_presence_of :password, :password_confirmation, :if => :password_changed?
+#  validates_presence_of :salt, :message => "is missing. New users require a password."
+#  validates_presence_of :password, :password_confirmation, :if => :password_changed?
   validates_uniqueness_of :username, :email
-  validates_confirmation_of :password, :if => :password_changed?
+#  validates_confirmation_of :password, :if => :password_changed?
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "address doesn't look valid"
   
   attr_protected :id, :salt
@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   def password_changed?
     hashed_password_changed?
   end
-  
+
   def password=(pass)
     @password = pass
     unless @password.blank?  
@@ -88,12 +88,13 @@ class User < ActiveRecord::Base
   # Check on user for omniauth-cas
   ##########
   def self.find_for_cas_oauth(access_token, signed_in_resource=nil)
-    data = access_token.extra.raw_info
-    logger.debug "DEBUG -> DATA #{data}"
-    if user = User.where(:username => data.username).first
+    data = access_token.extra
+    if user = User.where(:username => data.user).first
       user
     else # Create a user with a stub password. 
-      User.create!(:email => data.email, :password => Devise.friendly_token[0,20]) 
+# NOTE: Need to add option to set default email suffix so validation passes with a good email
+# when creating new user via this method
+      User.create!(:username => data.user, :password => Devise.friendly_token[0,20]) 
     end
   end
 
