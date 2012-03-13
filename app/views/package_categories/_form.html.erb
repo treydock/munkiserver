@@ -1,0 +1,11 @@
+<%= semantic_form_for @package_category, :html => { :multipart => true } do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :description %>
+    <%= f.input :new_icon, :as => :file,
+          :hint => ( f.template.image_tag(@package_category.icon.url(:tiny), :class => "thumbnail") if @package_category.icon ) %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, :button_html => { :value => "Update" } %>
+  <% end %>
+<% end %>

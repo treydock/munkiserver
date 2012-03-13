@@ -20,12 +20,15 @@ gem "omniauth"
 gem "omniauth-cas"
 
 # Configuration
-gem "configurable_engine", :git => "git://github.com/treydock/configurable_engine.git"
+#gem "configurable_engine", :git => "git://github.com/treydock/configurable_engine.git"
+gem "configurable_engine"
 gem "rails_config"
 
 gem "newrelic_rpm"
 gem "highcharts-rails", "~> 2.1.9"
 gem "dynamic_form" # enabling this should allow the removal of vendor/dynamic_form
+gem "tabs_on_rails"
+gem "formtastic"
 
 group :development do
   # gem "ruby-debug19" , :require => "ruby-debug"

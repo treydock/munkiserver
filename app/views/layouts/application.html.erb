@@ -57,9 +57,9 @@
 				<li class="dir">
 					<%= link_to "Dashboard", dashboard_path %>
 				</li>
-				<% if can? :read, Permission %>
+				<% if can? :manage, :admin %>
 					<li class="dir">
-						<%= link_to "Permissions", permissions_path %>
+						<%= link_to "Admin", admin_settings_path %>
 					</li>
 				<% end %>
 				<% if user_signed_in? %>
@@ -142,6 +142,17 @@
 			<% flash.each do |key, msg| %>
 				<%= content_tag :div, msg, :class => "message #{key}" %>
 			<% end %>
+    <!-- If URL begins with admin, show tabs in layout
+         Alternative is to use seperate layout -->
+    <% if is_admin_namespace? %>
+      <%= content_tag :div, :id => "admin_tabs" do %>
+        <%= tabs_tag(:builder => MenuTabsBuilder) do |tab| %>
+          <%= tab.settings   "Settings", admin_settings_path %>
+          <%= tab.package_categories   "Package Categories", package_categories_path %>
+          <%= tab.permissions   "Permissions", permissions_path %>
+        <% end %>
+      <% end %>
+    <% end %>
 			<%= yield %>
 		</div>
 		<%= yield :dashboard %>
@@ -149,7 +160,6 @@
 		<%= render :partial => "shared/sidebar" %>
 		<%= yield :sidebar %>
 	</div>
-	
 	</div>
 	<div class="push"></div>
 </div>

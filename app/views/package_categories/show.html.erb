@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @package_category.to_s %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @package_category.description %>
+</p>
+
+<p>
+  <b>Icon:</b>
+  <%= image_tag @package_category.icon.url(:tiny), :class => "thumbnail" if @package_category.icon %>
+</p>
+
+
+<%= link_to 'Edit', edit_package_category_path(@package_category) %> |
+<%= link_to 'Back', package_categories_path %>

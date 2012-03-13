@@ -12,4 +12,10 @@
 *= require codemirror/clike
 *= require codemirror/xml
 *= require style
+*= require admin
+*= require formtastic
+*= require formtastic_ie6
+*= require formtastic_ie7
+*= require formtastic_munkiserver
+*= require_self
 */

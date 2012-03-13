@@ -1,5 +1,6 @@
 Munki::Application.routes.draw do  
 
+  
   # Session
   devise_for :users, :skip => [:sessions], :path_names => { :sign_in => 'login', :sign_out => 'logout' }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
     get '/login' => 'sessions#new', :as => :new_user_session
@@ -80,13 +81,22 @@ Munki::Application.routes.draw do
     match 'install_items/edit_multiple/:computer_id' => 'install_items#edit_multiple', :as => "edit_multiple_install_items", :via => :get
     match 'install_items/update_multiple' => 'install_items#update_multiple', :as => "update_multiple_install_items", :via => :put
   end
+
+#  match "admin" => "admin#index", :as => "admin", :via => "GET"
+
+  scope "/admin" do
+    resource :settings, :as => "admin_settings"
+    resources :package_categories
+
+    match "permissions" => "permissions#index", :as => "permissions", :via => "GET"
+    match "permissions/edit/:principal_pointer(/:unit_id)" => "permissions#edit", :as => "edit_permissions", :via => "GET"
+    match "permissions" => "permissions#update", :as => "update_permissions", :via => "PUT"
+  end
   
+
   match 'dashboard' => "dashboard#index", :as => "dashboard"
   match 'dashboard/widget/:name' => 'dashboard#widget', :as => "widget"
   
-  match "permissions" => "permissions#index", :as => "permissions", :via => "GET"
-  match "permissions/edit/:principal_pointer(/:unit_id)" => "permissions#edit", :as => "edit_permissions", :via => "GET"
-  match "permissions" => "permissions#update", :as => "update_permissions", :via => "PUT"
   
  # root :to => redirect("/login")
  root :to => "dashboard#index"
