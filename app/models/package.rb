@@ -206,7 +206,7 @@ class Package < ActiveRecord::Base
   def installs_plist=(value)
     plist_virtual_attribute_set(:installs,value)
   end
-  
+
   # Virutal attribute getter
   # Converts raw_tags hash into plist
   def raw_tags_plist
@@ -216,23 +216,15 @@ class Package < ActiveRecord::Base
   # Setter for the raw_tags attribute. Converts the plist string value to
   # a ruby object and assigns it to the attribute. Takes a raw plist string.
   def raw_tags_plist=(value)
-    begin
-      obj = value.from_plist
-      yaml = obj.to_yaml
-    rescue TypeError
-      yaml = value.to_yaml
-    rescue NoMethodError
-      yaml = value.to_yaml
-    end
-    write_attribute(:raw_tags,yaml) unless yaml.nil?
-    yaml
+    obj = value.to_s.from_plist
+    self.raw_tags = obj
   end
   
   def add_raw_tag(key,value)
     self.raw_mode_id = 1 if no_raw?
-    raw_tags_hash = self.raw_tags
-    raw_tags_hash[key] = value
-    write_attribute(:raw_tags,raw_tags_hash)
+    h = self.raw_tags
+    h[key] = value
+    self.raw_tags = h
   end
   
   # Virtual attribute that parses the array value of a tabled asm select into package and 
