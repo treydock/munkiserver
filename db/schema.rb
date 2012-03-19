@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111208121600) do
+ActiveRecord::Schema.define(:version => 20120312183455) do
 
   create_table "bundle_items", :force => true do |t|
     t.integer  "manifest_id"
@@ -26,11 +26,11 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
     t.text     "description"
     t.integer  "unit_id"
     t.integer  "environment_id"
-    t.text     "raw_tags"
-    t.text     "raw_mode",       :default => "f"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "shortname"
+    t.text     "raw_tags"
+    t.text     "raw_mode",       :default => "f"
   end
 
   create_table "client_logs", :force => true do |t|
@@ -47,12 +47,12 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
     t.text     "description"
     t.integer  "unit_id"
     t.integer  "environment_id"
-    t.text     "raw_tags"
-    t.text     "raw_mode",         :default => "f"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "configuration_id"
     t.string   "shortname"
+    t.text     "raw_tags"
+    t.text     "raw_mode",         :default => "f"
   end
 
   create_table "computer_models", :force => true do |t|
@@ -72,15 +72,24 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
     t.integer  "computer_group_id"
     t.integer  "unit_id"
     t.integer  "environment_id"
-    t.text     "raw_tags"
-    t.text     "raw_mode",             :default => "f"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "hostname",             :default => ""
     t.integer  "configuration_id"
     t.string   "shortname"
+    t.text     "raw_tags"
     t.datetime "last_report_at"
+    t.text     "raw_mode",             :default => "f"
   end
+
+  create_table "configurables", :force => true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "configurables", ["name"], :name => "index_configurables_on_name"
 
   create_table "configurations", :force => true do |t|
     t.string   "configuration"
@@ -101,9 +110,9 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
   create_table "environments", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.text     "environment_ids", :default => "--- []"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "environment_ids", :default => "--- []"
   end
 
   create_table "icons", :force => true do |t|
@@ -207,14 +216,11 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
     t.integer  "unit_id"
     t.integer  "environment_id"
     t.integer  "package_category_id"
-    t.text     "receipts",                  :default => "--- []"
     t.text     "description"
     t.integer  "icon_id"
     t.string   "filename"
-    t.text     "supported_architectures",   :default => "--- []"
     t.text     "minimum_os_version"
     t.text     "maximum_os_version"
-    t.text     "installs",                  :default => "--- []"
     t.string   "RestartAction"
     t.string   "package_path"
     t.boolean  "autoremove",                :default => false
@@ -231,7 +237,6 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
     t.integer  "uninstaller_item_size"
     t.boolean  "uninstallable",             :default => true
     t.string   "installer_item_checksum"
-    t.text     "raw_tags",                  :default => "--- {}"
     t.integer  "raw_mode_id",               :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -243,6 +248,10 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
     t.boolean  "unattended_install",        :default => false
     t.boolean  "unattended_uninstall",      :default => false
     t.datetime "force_install_after_date"
+    t.text     "receipts",                  :default => "--- []"
+    t.text     "supported_architectures",   :default => "--- []"
+    t.text     "installs",                  :default => "--- []"
+    t.text     "raw_tags",                  :default => "--- {}"
   end
 
   create_table "permissions", :force => true do |t|
@@ -410,13 +419,21 @@ ActiveRecord::Schema.define(:version => 20111208121600) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "hashed_password"
+    t.string   "encrypted_password",  :limit => 128, :default => "",    :null => false
     t.string   "email"
     t.string   "salt"
-    t.boolean  "super_user",      :default => false
+    t.boolean  "super_user",                         :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                      :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
+
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "version_trackers", :force => true do |t|
     t.integer  "package_branch_id"
