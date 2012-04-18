@@ -23,5 +23,7 @@
 
     <%= f.submit "Login (#{Rails.env})" %>
   <% end %>
-  <%= link_to "Sign in with CAS", user_omniauth_authorize_path(:cas) %>
+  <% if Setting.external_auth_type == "cas" %>
+    <%= link_to "Sign in with CAS", user_omniauth_authorize_path(:cas) %>
+  <% end %>
 </div>

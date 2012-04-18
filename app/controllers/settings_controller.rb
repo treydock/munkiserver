@@ -6,12 +6,13 @@ class SettingsController < AdminController
   set_tab :settings
 
   def show
-    @settings = Configurable.keys
+    @settings = Setting.keys.delete_if {|s| s.starts_with?("external_auth")}
+    @auth_settings = Setting.keys.delete_if {|s| !s.starts_with?("external_auth")}
   end
   
   def update
-    Configurable.keys.each do |key|
-      Configurable.find_or_create_by_name(key).update_attribute(:value,params[key])
+    Setting.keys.each do |key|
+      Setting.find_or_create_by_name(key).update_attribute(:value,params[key])
     end
 
     redirect_to admin_settings_path

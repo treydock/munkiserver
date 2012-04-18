@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20120312183455) do
     t.datetime "updated_at"
     t.string   "shortname"
     t.text     "raw_tags"
-    t.text     "raw_mode",       :default => "f"
+    t.text     "raw_mode"
   end
 
   create_table "client_logs", :force => true do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20120312183455) do
     t.integer  "configuration_id"
     t.string   "shortname"
     t.text     "raw_tags"
-    t.text     "raw_mode",         :default => "f"
+    t.text     "raw_mode"
   end
 
   create_table "computer_models", :force => true do |t|
@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20120312183455) do
     t.string   "shortname"
     t.text     "raw_tags"
     t.datetime "last_report_at"
-    t.text     "raw_mode",             :default => "f"
+    t.text     "raw_mode"
   end
 
   create_table "configurables", :force => true do |t|
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(:version => 20120312183455) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "environment_ids", :default => "--- []"
+    t.text     "environment_ids"
   end
 
   create_table "icons", :force => true do |t|
@@ -248,10 +248,10 @@ ActiveRecord::Schema.define(:version => 20120312183455) do
     t.boolean  "unattended_install",        :default => false
     t.boolean  "unattended_uninstall",      :default => false
     t.datetime "force_install_after_date"
-    t.text     "receipts",                  :default => "--- []"
-    t.text     "supported_architectures",   :default => "--- []"
-    t.text     "installs",                  :default => "--- []"
-    t.text     "raw_tags",                  :default => "--- {}"
+    t.text     "receipts"
+    t.text     "supported_architectures"
+    t.text     "installs"
+    t.text     "raw_tags"
   end
 
   create_table "permissions", :force => true do |t|

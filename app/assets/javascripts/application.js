@@ -521,7 +521,7 @@ $(document).ready(function() {
     var principalPointer = $("#all-principals").find(".row.highlight").attr("data-principal-id");
     var unitId = $(".unit-container").find(".row.highlight").attr("data-unit-id");
     if(principalPointer != undefined) {
-      $.getScript("/permissions/edit/" + principalPointer + "/" + unitId); 
+      $.getScript("/admin/permissions/edit/" + principalPointer + "/" + unitId); 
     }
   });
   

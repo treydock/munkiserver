@@ -1,28 +1,7 @@
 <h2>Listing settings</h2>
-<div id="tabs">
-	<ul>
-		<li><a href="#general_settings_tab"><span>General Settings</span></a></li>
-		<li><a href="#authentication_tab"><span>Authentication</span></a></li>
-	</ul>
-	
-	<!-- First tab starts here -->
-	<div id="general_settings_tab">
-
 <%= semantic_form_for admin_settings_path, :method => :put do |f| %>
-  <%= f.inputs do %>
-    <% @settings.each do |key| %>
-      <% options = Configurable.defaults[key] %>
-      <%= f.input key, :input_html => { :name => key, :value => Configurable.send(key) }, :label => options[:name] %>
-    <% end %>
-  <% end %>
+  <%= render "edit_settings_tabs", :f => f %>
   <%= f.actions do %>
     <%= f.action :submit, :button_html => { :value => "Update" } %>
   <% end %>
 <% end %>
-
-  </div>
-
-  <div id="authentication_tab">
-
-  </div>
-</div>
