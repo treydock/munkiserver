@@ -20,14 +20,10 @@ module Munki
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-        
-    # Load server configuration YAML file
-    settings = nil
-    begin
-      settings = YAML.load(File.read("#{Rails.root}/config/settings.yaml"))
-    rescue Errno::ENOENT
-      # config/settings.yaml doesn't exist
-    end
+    
+    # Load server configuration from ActiveRecord
+    databases = YAML::load(File.read("#{Rails.root}/config/database.yml"))[Rails.env]
+    ActiveRecord::Base.establish_connection(databases)
     
     # Add additional load paths for your own custom dirs
     # config.load_paths += %W( #{config.root}/extras )
@@ -64,15 +60,10 @@ module Munki
     # config.action_dispatch.x_sendfile_header = "X-Sendfile"
     
     # Setup action mailer settings
-    if settings.present? and settings[:action_mailer].present?
-      config.action_mailer.default_url_options = { :host => settings[:action_mailer][:host] }
-      config.action_mailer.delivery_method = :sendmail
-      # config.action_mailer.delivery_method = settings[:action_mailer][:delivery_method] 
-      # config.action_mailer.sendmail_settings = settings[:action_mailer][:sendmail_settings] if settings[:action_mailer][:delivery_method] == :sendmail
-      # config.action_mailer.smtp_settings = settings[:action_mailer][:smtp_settings] if settings[:action_mailer][:delivery_method] == :smtp
-      # config.action_mailer.raise_delivery_errors = true
-    else
-      config.action_mailer.delivery_method = :sendmail
-    end
+    config.action_mailer.default_url_options = { :host => Settings["action_mailer.host"] }
+    config.action_mailer.delivery_method = Settings["action_mailer.delivery_method"]
+    # config.action_mailer.sendmail_settings = settings[:action_mailer][:sendmail_settings] if settings[:action_mailer][:delivery_method] == :sendmail
+    # config.action_mailer.smtp_settings = settings[:action_mailer][:smtp_settings] if settings[:action_mailer][:delivery_method] == :smtp
+    # config.action_mailer.raise_delivery_errors = true
   end
 end

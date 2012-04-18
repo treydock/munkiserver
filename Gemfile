@@ -22,7 +22,7 @@ gem "omniauth-cas"
 # Configuration
 #gem "configurable_engine", :git => "git://github.com/treydock/configurable_engine.git"
 gem "configurable_engine"
-gem "rails_config"
+gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 gem "newrelic_rpm"
 gem "highcharts-rails", "~> 2.1.9"

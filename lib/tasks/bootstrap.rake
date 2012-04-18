@@ -218,19 +218,27 @@ namespace :bootstrap do
   
   desc "Create a settings.yaml file, if missing"
   task :settings, [:settings, :hostname] => :environment do |t, args|
-    unless File.exists?("config/settings.yaml")
-      hostname = args.hostame
-      puts "Grenerating settings.yaml file, if blank default to \"localhost:3000\""
-      print "Hostname: "
-      hostname = STDIN.gets.chomp
-      if hostname.empty?
-        hostname = "localhost:3000"
-      end
-       h = {}
-        File.open( "config/settings.yaml", "w" ) do |file|
-          h[:action_mailer] = {:host => "#{hostname}" }
-          file.write(h.to_yaml)
-        end
+    settings = {
+      "external_auth.type" => "",
+      "external_auth.host" => "",
+      "external_auth.use_ssl" => true,
+      "action_mailer.delivery_method" => :sendmail,
+      "action_mailer.host" => "localhost:3000",
+      "smtp" => {
+        "address"               => "",
+        "port"                  => "",
+        "username"              => "",
+        "password"              => "",
+        "authentication"        => "",
+        "enable_starttls_auto"  => ""
+      },
+      "sendmail" => {
+        "location" => "/usr/sbin/sendmail"
+      }
+    }
+
+    settings.each_pair do |setting,value|
+      Settings[setting] = value if Settings[setting].nil?
     end
   end
   
