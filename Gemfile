@@ -20,8 +20,6 @@ gem "omniauth"
 gem "omniauth-cas"
 
 # Configuration
-#gem "configurable_engine", :git => "git://github.com/treydock/configurable_engine.git"
-gem "configurable_engine"
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 gem "newrelic_rpm"
