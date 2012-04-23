@@ -82,15 +82,6 @@ ActiveRecord::Schema.define(:version => 20120418181825) do
     t.text     "raw_mode"
   end
 
-  create_table "configurables", :force => true do |t|
-    t.string   "name"
-    t.string   "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "configurables", ["name"], :name => "index_configurables_on_name"
-
   create_table "configurations", :force => true do |t|
     t.string   "configuration"
     t.boolean  "inherit",       :default => true
@@ -281,15 +272,14 @@ ActiveRecord::Schema.define(:version => 20120418181825) do
   end
 
   create_table "settings", :force => true do |t|
-    t.string   "var",                       :null => false
-    t.text     "value"
-    t.integer  "target_id"
-    t.string   "target_type", :limit => 30
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.string   "key"
+    t.string   "value"
+    t.string   "context"
+    t.integer  "configurable_id"
+    t.string   "configurable_type"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
-
-  add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
   create_table "sp_printers", :force => true do |t|
     t.string   "name"

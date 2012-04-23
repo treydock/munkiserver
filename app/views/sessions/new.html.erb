@@ -23,7 +23,7 @@
 
     <%= f.submit "Login (#{Rails.env})" %>
   <% end %>
-  <% if Settings["external_auth.type"] == "cas" %>
+  <% if Cockpit::Settings["site.external_auth.type"] == "cas" %>
     <%= link_to "Sign in with CAS", user_omniauth_authorize_path(:cas) %>
   <% end %>
 </div>

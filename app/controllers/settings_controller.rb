@@ -8,9 +8,8 @@ class SettingsController < AdminController
   end
   
   def update
-    params[:settings].each_pair do |setting,value|
-      Settings[setting] = value
-    end
+    Cockpit::Settings.update(params[:settings])
+
     redirect_to admin_settings_path
   end
 

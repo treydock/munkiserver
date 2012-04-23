@@ -1,14 +1,13 @@
 class CreateSettingsTable < ActiveRecord::Migration
   def self.up
     create_table :settings, :force => true do |t|
-      t.string  :var,         :null => false
-      t.text    :value
-      t.integer :target_id
-      t.string  :target_type, :limit => 30
+      t.string  :key
+      t.string  :value
+      t.string  :context
+      t.integer :configurable_id
+      t.string  :configurable_type
       t.timestamps
     end
-
-    add_index :settings, [ :target_type, :target_id, :var ], :unique => true
   end
 
   def self.down

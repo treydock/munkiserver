@@ -22,8 +22,8 @@ module Munki
     config.assets.version = '1.0'
     
     # Load server configuration from ActiveRecord
-    databases = YAML::load(File.read("#{Rails.root}/config/database.yml"))[Rails.env]
-    ActiveRecord::Base.establish_connection(databases)
+#    databases = YAML::load(File.read("#{Rails.root}/config/database.yml"))[Rails.env]
+#    ActiveRecord::Base.establish_connection(databases)
     
     # Add additional load paths for your own custom dirs
     # config.load_paths += %W( #{config.root}/extras )
@@ -60,8 +60,8 @@ module Munki
     # config.action_dispatch.x_sendfile_header = "X-Sendfile"
     
     # Setup action mailer settings
-    config.action_mailer.default_url_options = { :host => Settings["action_mailer.host"] }
-    config.action_mailer.delivery_method = Settings["action_mailer.delivery_method"]
+#    config.action_mailer.default_url_options = { :host => Cockpit::Settings["action_mailer.host"] }
+#    config.action_mailer.delivery_method = Cockpit::Settings["action_mailer.delivery_method"]
     # config.action_mailer.sendmail_settings = settings[:action_mailer][:sendmail_settings] if settings[:action_mailer][:delivery_method] == :sendmail
     # config.action_mailer.smtp_settings = settings[:action_mailer][:smtp_settings] if settings[:action_mailer][:delivery_method] == :smtp
     # config.action_mailer.raise_delivery_errors = true

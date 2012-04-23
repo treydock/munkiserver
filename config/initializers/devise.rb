@@ -198,9 +198,9 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
-  unless Settings['external_auth.type'].blank?
-    config.omniauth Settings['external_auth.type'].to_sym, :host => Settings['external_auth.host'], :ssl => Settings['external_auth.use_ssl']
-  end
+#  unless Cockpit::Settings["site.external_auth.type"].blank?
+#    config.omniauth Cockpit::Settings['site.external_auth.type'].to_sym, :host => Cockpit::Settings['site.external_auth.host'], :ssl => Cockpit::Settings['site.external_auth.use_ssl']
+#  end
   
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

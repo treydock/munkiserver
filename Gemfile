@@ -20,7 +20,8 @@ gem "omniauth"
 gem "omniauth-cas"
 
 # Configuration
-gem 'ledermann-rails-settings', :require => 'rails-settings'
+gem "cockpit", :git => "git://github.com/treydock/cockpit.git"
+#gem 'ledermann-rails-settings', :require => 'rails-settings'
 
 gem "newrelic_rpm"
 gem "highcharts-rails", "~> 2.1.9"

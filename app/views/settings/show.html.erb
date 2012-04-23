@@ -1,33 +1,43 @@
 <h2>Listing settings</h2>
 <%= semantic_form_for "settings", :method => :put do |f| %>
 
-  <%= f.inputs :name => "Authentication" do %>
-    <% Settings.all('external_auth.').each_pair do |setting,value| %>
-      <%= f.input setting, :label => setting_label(setting), :input_html => { :value => value } %>
+  <% Cockpit::Settings["site"].each do |namespace| %>
+      <%= f.inputs :name => namespace.key.titleize do %>
+        <% if namespace.nested? %>
+          <% namespace.flatten.each_pair do |key,definition| %>
+            <%#= "<p>#{key}</p><br>".html_safe %>
+            <%#= "<p>#{definition.value.class unless definition.nested?}</p><br>".html_safe %>
+            <%= setting_input(f, "site.#{key}", definition) unless definition.nested? %>
+          <% end %>
+        <% end %>
+    <%#= f.inputs :name => section.key.titleize do %>
+      <%# Cockpit::Settings["site.external_auth"].each do |setting| %>
+        <%#= setting_input(f, setting) %>
+      <%# end %>
     <% end %>
   <% end %>
   
-  <%= f.inputs :name => "Mailer Settings" do %>
-    <% Settings.all('action_mailer.').each_pair do |setting,value| %>
-      <%= f.input setting, :label => setting_label(setting),  :input_html => { :value => value } %>
-    <% end %>
-  <% end %>
+  <%#= f.inputs :name => "Mailer Settings" do %>
+    <%# Cockpit::Settings.site.action_mailer.each do |setting| %>
+      <%#= f.input setting, :label => setting_label(setting),  :input_html => { :value => value } %>
+    <%# end %>
+  <%# end %>
 
-  <%= f.inputs :name => "SMTP Settings" do %>
-    <%= f.semantic_fields_for "smtp" do |s| %>
-      <% Settings.all('smtp')['smtp'].each do |setting,value| %>
-        <%= s.input setting, :label => setting_label(setting),  :input_html => { :value => value } %>
-      <% end %>
-    <% end %>
-  <% end %>
+  <%#= f.inputs :name => "SMTP Settings" do %>
+    <%#= f.semantic_fields_for "smtp" do |s| %>
+      <%# Cockpit::Settings.site.smtp.each do |setting| %>
+        <%#= s.input setting, :label => setting_label(setting),  :input_html => { :value => value } %>
+      <%# end %>
+    <%# end %>
+  <%# end %>
 
-  <%= f.inputs :name => "Sendmail Settings" do %>
-    <%= f.semantic_fields_for "sendmail" do |s| %>
-      <% Settings.all('sendmail')['sendmail'].each do |setting,value| %>
-        <%= s.input setting, :label => setting_label(setting),  :input_html => { :value => value } %>
-      <% end %>
-    <% end %>
-  <% end %>
+  <%#= f.inputs :name => "Sendmail Settings" do %>
+    <%#= f.semantic_fields_for "sendmail" do |s| %>
+      <%# Cockpit::Settings.site.sendmail.each do |setting| %>
+        <%#= s.input setting, :label => setting_label(setting),  :input_html => { :value => value } %>
+      <%# end %>
+    <%# end %>
+  <%# end %>
 
   <%= f.actions do %>
     <%= f.action :submit, :button_html => { :value => "Update" } %>
