@@ -271,4 +271,8 @@ module ApplicationHelper
     logger.debug "DEBUG REQUEST URI #{request.fullpath}"
     request.fullpath.split("/").second == "admin"
   end
+  
+  def ldap_enable?
+    Devise.omniauth_providers.include?(:ldap)
+  end
 end

@@ -15,15 +15,31 @@
 <% end %>
 
 <div id="login_form">
-  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-    <%= f.text_field :username %>
-    <%= f.password_field :password %>
-    <%= subtle_value_tag("username", "Username") %><br />
-    <%= hidden_field_tag "redirect", params[:redirect] %>
+  <%= semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <%= f.inputs do %>
+      <%#= f.text_field :username, :label => false %>
+      <%#= f.password_field :password %>
+      <%= f.input :username, :label => false %>
+      <%= f.input :password, :label => false %>
+      <%= subtle_value_tag("user_username", "Username") %>
+      <%= hidden_field_tag "redirect", params[:redirect] %>
+    <% end %>
+    
+    <%= f.actions do %>
+      <%= f.action :submit, :label => "Login (#{Rails.env})" %>
+    <% end %>
 
-    <%= f.submit "Login (#{Rails.env})" %>
+    <%- if devise_mapping.omniauthable? %>
+      <%- resource_class.omniauth_providers.each do |provider| %>
+        <hr/>
+        <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), :class => "btn primary" %><br />
+      <% end -%>
+    <% end -%>
+    <% if ldap_enable? -%>
+      <p><%= link_to "via LDAP", user_omniauth_authorize_path(:ldap)%></p>
+    <% end -%>
   <% end %>
-  <% if Cockpit::Settings["site.external_auth.type"] == "cas" %>
-    <%= link_to "Sign in with CAS", user_omniauth_authorize_path(:cas) %>
-  <% end %>
+  <%# if Cockpit::Settings["site.external_auth.type"] == "cas" %>
+    <%#= link_to "Sign in with CAS", user_omniauth_authorize_path(:cas) %>
+  <%# end %>
 </div>

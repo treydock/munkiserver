@@ -2,10 +2,10 @@ Munki::Application.routes.draw do
 
   
   # Session
-  devise_for :users, :skip => [:sessions], :path_names => { :sign_in => 'login', :sign_out => 'logout' }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
-    get '/login' => 'sessions#new', :as => :new_user_session
-    post '/login' => 'sessions#create', :as => :user_session
-    get '/logout' => 'sessions#destroy', :as => :destroy_user_session
+  devise_for :users, :skip => [:sessions], :path_names => { :sign_in => '/login', :sign_out => '/logout' }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" } do
+    get   '/login'  => 'sessions#new',     :as => :new_user_session
+    post  '/login'  => 'sessions#create',  :as => :user_session
+    get   '/logout' => 'sessions#destroy', :as => :destroy_user_session
   end
 
   resources :units, :except => [:show] do
