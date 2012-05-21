@@ -23,6 +23,9 @@ gem "omniauth-cas"
 gem "cockpit", :git => "git://github.com/treydock/cockpit.git"
 #gem 'ledermann-rails-settings', :require => 'rails-settings'
 
+gem "mysql2", "> 0.3"
+gem "taps"
+
 gem "newrelic_rpm"
 gem "highcharts-rails", "~> 2.1.9"
 gem "dynamic_form" # enabling this should allow the removal of vendor/dynamic_form

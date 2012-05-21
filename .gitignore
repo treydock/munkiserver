@@ -16,6 +16,5 @@ tmp/**/*
 tmp/
 .sass-cache/
 
-.rvmrc
 config/newrelic.yml
 config/setup_load_paths.rb
