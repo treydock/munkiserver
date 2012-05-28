@@ -17,18 +17,6 @@ class ApplicationController < ActionController::Base
     args = options.map { |k,v| "#{k.to_s.upcase}='#{v}'" }
     system "rake #{task} #{args.join(' ')} --trace >> #{Rails.root}/log/rake.log &"
   end
-  
-=begin
-  # Redirects user to login path if client logged in or the action is authorized
-  def require_login
-    if user_signed_in? #or authorized?
-      # Let them pass
-    else
-      flash[:warning] = "You must be logged in to view that page"
-      redirect_to login_path(:redirect => request.url)
-    end
-  end
-=end  
 
   # Checks unit_shortname and ensures it refers to a valid unit
   def validate_unit_shortname
@@ -57,15 +45,11 @@ class ApplicationController < ActionController::Base
   
   # Stub for controllers to override
   def load_singular_resource
-#    unless params[:controller] == "devise/sessions"
-      raise Exception.new("Unable to load singular resource for #{params[:action]} action of #{params[:controller]} controller.")
-#    end
+    raise Exception.new("Unable to load singular resource for #{params[:action]} action of #{params[:controller]} controller.")
   end
   
   def authorize_resource
-#    unless params[:controller] == "devise/sessions"
-      authorize! params[:action].to_sym, instance_variable_get("@#{params[:controller].singularize}") || params[:controller].classify.constantize
-#    end
+    authorize! params[:action].to_sym, instance_variable_get("@#{params[:controller].singularize}") || params[:controller].classify.constantize
   end
   
   rescue_from CanCan::AccessDenied do |exception|

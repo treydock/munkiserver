@@ -216,32 +216,6 @@ namespace :bootstrap do
     end
   end
   
-  desc "Create a settings.yaml file, if missing"
-  task :settings, [:settings, :hostname] => :environment do |t, args|
-    settings = {
-      "external_auth.type" => "",
-      "external_auth.host" => "",
-      "external_auth.use_ssl" => true,
-      "action_mailer.delivery_method" => :sendmail,
-      "action_mailer.host" => "localhost:3000",
-      "smtp" => {
-        "address"               => "",
-        "port"                  => "",
-        "username"              => "",
-        "password"              => "",
-        "authentication"        => "",
-        "enable_starttls_auto"  => ""
-      },
-      "sendmail" => {
-        "location" => "/usr/sbin/sendmail"
-      }
-    }
-
-    settings.each_pair do |setting,value|
-      Settings[setting] = value if Settings[setting].nil?
-    end
-  end
-  
   desc "Create base environments"
   task :environments do |t, args|
     # Build the staging environment
@@ -284,6 +258,28 @@ namespace :bootstrap do
         if privilege.name.match(/^[a-zA-Z]+_#{privilege_group_name}$/)
           privilege.unit_specific = true
           privilege.save
+        end
+      end
+    end
+  end
+  
+  desc "Populate global settings defaults"
+  task :settings => :environment do |t, args|
+    # Hash that defines default settings
+    DEFAULT_SETTINGS = HashWithIndifferentAccess.new(YAML.load(File.read("#{Rails.root}/config/settings/defaults.yml")))
+
+    # If setting does not exist, create with default value
+    DEFAULT_SETTINGS.each do |category,settings|
+      # Create the setting categories
+      @setting_category = SettingCategory.find_or_create_by_name(category)
+      
+      settings.each do |name,values|
+        @setting = Setting.find_by_name_and_category_id(name, @setting_category.id)
+
+        if @setting.nil? # Create setting if it doesn't exist
+          puts "Adding new setting: #{@setting_category.name} - #{name}"
+          @setting = Setting.create(:name => name, :category => @setting_category)
+          @setting.update_attributes(values)
         end
       end
     end

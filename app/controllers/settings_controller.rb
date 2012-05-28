@@ -4,13 +4,17 @@ class SettingsController < AdminController
   skip_before_filter :load_singular_resource
   set_tab :settings
 
-  def show
+  def index
+    @setting_categories = SettingCategory.find(:all)
   end
   
   def update
-    Cockpit::Settings.update(params[:settings])
+    @setting = Setting.find(params[:id])
 
-    redirect_to admin_settings_path
+    respond_to do |format|
+      @setting.update_attributes(:value => params[:setting][:value])
+      format.json { respond_with_bip(@setting) }
+    end
   end
 
   private

@@ -1,5 +1,5 @@
 require 'iconv' unless RUBY_VERSION =~ /^1\.9/
-class String
+String.class_eval do
   def each(&block)
     self.each_line(&block)
   end
@@ -70,5 +70,11 @@ class String
     end
     # If we made it here, they are equal
     return 0
+  end
+  
+  def to_bool
+    return true if self == true or self =~ /true|1|yes/
+    return false if self == false or self =~ /false|0|no/
+    raise ArgumentError.new("invalid value for Boolean:\"#{string}\"")
   end
 end

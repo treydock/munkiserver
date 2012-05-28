@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111210185512) do
+ActiveRecord::Schema.define(:version => 20120528003311) do
 
   create_table "bundle_items", :force => true do |t|
     t.integer  "manifest_id"
@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(:version => 20111210185512) do
     t.text     "description"
     t.integer  "unit_id"
     t.integer  "environment_id"
+    t.text     "raw_tags"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "shortname"
-    t.text     "raw_tags"
     t.text     "raw_mode"
   end
 
@@ -47,11 +47,11 @@ ActiveRecord::Schema.define(:version => 20111210185512) do
     t.text     "description"
     t.integer  "unit_id"
     t.integer  "environment_id"
+    t.text     "raw_tags"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "configuration_id"
     t.string   "shortname"
-    t.text     "raw_tags"
     t.text     "raw_mode"
   end
 
@@ -72,12 +72,12 @@ ActiveRecord::Schema.define(:version => 20111210185512) do
     t.integer  "computer_group_id"
     t.integer  "unit_id"
     t.integer  "environment_id"
+    t.text     "raw_tags"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "hostname",             :default => ""
     t.integer  "configuration_id"
     t.string   "shortname"
-    t.text     "raw_tags"
     t.datetime "last_report_at"
     t.text     "raw_mode"
   end
@@ -271,15 +271,24 @@ ActiveRecord::Schema.define(:version => 20111210185512) do
     t.datetime "updated_at"
   end
 
-  create_table "settings", :force => true do |t|
-    t.string   "key"
-    t.string   "value"
-    t.string   "context"
-    t.integer  "configurable_id"
-    t.string   "configurable_type"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+  create_table "setting_categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
+
+  create_table "settings", :force => true do |t|
+    t.string   "name"
+    t.text     "value"
+    t.integer  "category_id"
+    t.string   "input_type"
+    t.text     "options"
+    t.text     "_config"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "settings", ["name", "category_id"], :name => "index_settings_on_name_and_category_id", :unique => true
 
   create_table "sp_printers", :force => true do |t|
     t.string   "name"

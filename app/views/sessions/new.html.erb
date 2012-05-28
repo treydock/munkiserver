@@ -28,18 +28,14 @@
     <%= f.actions do %>
       <%= f.action :submit, :label => "Login (#{Rails.env})" %>
     <% end %>
-
-    <%- if devise_mapping.omniauthable? %>
-      <%- resource_class.omniauth_providers.each do |provider| %>
-        <hr/>
-        <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), :class => "btn primary" %><br />
-      <% end -%>
-    <% end -%>
-    <% if ldap_enable? -%>
-      <p><%= link_to "via LDAP", user_omniauth_authorize_path(:ldap)%></p>
-    <% end -%>
   <% end %>
-  <%# if Cockpit::Settings["site.external_auth.type"] == "cas" %>
-    <%#= link_to "Sign in with CAS", user_omniauth_authorize_path(:cas) %>
-  <%# end %>
 </div>
+
+<% if devise_mapping.omniauthable? %>
+  <div id="external_login">
+    <hr/>
+    <% resource_class.omniauth_providers.each do |provider| %>
+      <%= link_to "Sign in with #{provider.to_s.upcase}", omniauth_authorize_path(resource_name, provider), :class => "btn btn-primary" %><br />
+    <% end %>
+  </div>
+<% end %>

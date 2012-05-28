@@ -1,0 +1,70 @@
+---
+external_authentication:
+  type: 
+    value: "db"
+    input_type: "select"
+    options: [["none","None"],["cas","CAS"],["ldap","LDAP"]]
+cas_authentication:
+  host:
+    value: ""
+    input_type: "string"
+  use_ssl:
+    value: "true"
+    input_type: "boolean"
+ldap_authentication:
+  host:
+    value: ""
+    input_type: "string"
+  base:
+    value: ""
+    input_type: "string"
+  uid:
+    value: ""
+    input_type: "string"
+  port:
+    value: 389
+    input_type: "string"
+  method:
+    value: "plain"
+    input_type: "string"
+  bind_dn:
+    value: ""
+    input_type: "string"
+  password:
+    value: ""
+    input_type: "password"
+action_mailer:
+  delivery_method:
+    value: "sendmail"
+    input_type: "select"
+    options: [["smtp","SMTP"],["sendmail","Sendmail"],["test","Test"],["file","File"]]
+  host:
+    value: "localhost:3000"
+    input_type: "string"
+smtp:
+  address:
+    value: ""
+    input_type: "string"
+  port:
+    value: ""
+    input_type: "string"
+  domain:
+    value: ""
+    input_type: "string"
+  username:
+    value: ""
+    input_type: "string"
+  password:
+    value: ""
+    input_type: "password"
+  authentication:
+    value: ""
+    input_type: "select"
+    options: [["plain","plain"],["login","login"],["cram_md5","cram_md5"]]
+  enable_starttls_auto:
+    value: "false"
+    input_type: "boolean"
+sendmail:
+  location:
+    value: "/usr/sbin/sendmail"
+    input_type: "string"

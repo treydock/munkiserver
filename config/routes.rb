@@ -83,10 +83,12 @@ Munki::Application.routes.draw do
     match 'install_items/update_multiple' => 'install_items#update_multiple', :as => "update_multiple_install_items", :via => :put
   end
 
-#  match "admin" => "admin#index", :as => "admin", :via => "GET"
-
   scope "/admin" do
-    resource :settings, :as => "admin_settings"
+    resources :settings, :as => "admin_settings" do
+      member do
+        put :update
+      end
+    end
     resources :package_categories
 
     match "permissions" => "permissions#index", :as => "permissions", :via => "GET"
@@ -99,6 +101,5 @@ Munki::Application.routes.draw do
   match 'dashboard/widget/:name' => 'dashboard#widget', :as => "widget"
   
   
- # root :to => redirect("/login")
  root :to => "dashboard#index"
 end

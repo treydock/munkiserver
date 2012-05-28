@@ -20,8 +20,8 @@ gem "omniauth"
 gem "omniauth-cas"
 
 # Configuration
-gem "cockpit", :git => "git://github.com/treydock/cockpit.git"
-#gem 'ledermann-rails-settings', :require => 'rails-settings'
+# Candidate for resource specific settings
+#gem 'store_configurable', '~> 3.2.0'
 
 gem "mysql2", "> 0.3"
 gem "taps"
@@ -31,6 +31,7 @@ gem "highcharts-rails", "~> 2.1.9"
 gem "dynamic_form" # enabling this should allow the removal of vendor/dynamic_form
 gem "tabs_on_rails"
 gem "formtastic"
+gem "best_in_place"
 
 group :development do
   # gem "ruby-debug19" , :require => "ruby-debug"

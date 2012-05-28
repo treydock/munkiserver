@@ -78,3 +78,50 @@
   color: #555555;
 }
 /* END Admin interface tabs */
+
+/* Settings index */
+
+table.settings {
+  border-bottom: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+  border-collapse: separate;
+  border-radius: 4px;
+}
+
+table.settings tr {
+}
+
+table.settings th, table.settings td {
+  padding: 8px;
+  border-top: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+}
+
+table.settings td.category {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.08);
+  font-weight: bold;
+}
+
+table.settings td.name {
+  width: 25%;
+}
+
+table.settings td.value {
+  width: 70%;
+}
+
+/* END Settings index */
+
+/* Best in Place editing styles */
+
+.best_in_place {
+  background: url(<%= asset_path 'edit-gray.png' %>) no-repeat scroll 98% 3px transparent ;
+  cursor: pointer;
+  padding: 4px 26px 4px 0px;
+}
+
+.best_in_place:hover {
+  background: url(<%= asset_path 'edit-gray-hover.png' %>) no-repeat scroll 98% 3px #F2F2F2;
+}
+/* END Best in place editing styles */

@@ -268,11 +268,6 @@ module ApplicationHelper
   end
 
   def is_admin_namespace?
-    logger.debug "DEBUG REQUEST URI #{request.fullpath}"
     request.fullpath.split("/").second == "admin"
-  end
-  
-  def ldap_enable?
-    Devise.omniauth_providers.include?(:ldap)
   end
 end

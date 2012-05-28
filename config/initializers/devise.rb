@@ -194,14 +194,6 @@ Devise.setup do |config|
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
 
-  # ==> OmniAuth
-  # Add a new OmniAuth provider. Check the wiki for more information on setting
-  # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
-#  unless Cockpit::Settings["site.external_auth.type"].blank?
-#    config.omniauth Cockpit::Settings['site.external_auth.type'].to_sym, :host => Cockpit::Settings['site.external_auth.host'], :ssl => Cockpit::Settings['site.external_auth.use_ssl']
-#  end
-  
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

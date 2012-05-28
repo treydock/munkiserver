@@ -2,6 +2,7 @@
 *= require jquery
 *= require jquery_ujs
 *= require jquery-ui
+*= require jquery.purr
 *= require rails.validations
 *= require jquery.asmselect
 *= require jquery.autocomplete.min
@@ -12,6 +13,8 @@
 *= require codemirror/xml
 *= require overlay.js
 *= require highcharts
+*= require best_in_place
+*= require admin
 *= require_self
 *= */
 
