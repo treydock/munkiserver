@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120528003311) do
+ActiveRecord::Schema.define(:version => 20120529135634) do
 
   create_table "bundle_items", :force => true do |t|
     t.integer  "manifest_id"
@@ -441,6 +441,7 @@ ActiveRecord::Schema.define(:version => 20120528003311) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.boolean  "external_auth"
   end
 
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true

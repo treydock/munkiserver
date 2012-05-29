@@ -11,6 +11,11 @@
 			<td><%= f.text_field :email %></td>
 			<td><%= helpful_info("Requires a valid email address.") %></td>
 		</tr>
+		<tr>
+			<td>External Authentication</td>
+			<td><%= f.check_box :external_auth %></td>
+			<td><%= helpful_info("Authenticates against external source.") %></td>
+		</tr>
 		<tr class="password-wrapper">
 			<td>Password</td>
 			<td><%= f.password_field :password, :validate => false %></td>

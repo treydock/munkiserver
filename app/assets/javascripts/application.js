@@ -98,6 +98,20 @@ $(document).ready(function() {
 		}
 	});
 	
+	// Hide password fields if external authentication checked
+	if ($('#user_external_auth').is(':checked')) {
+	  $('tr.password-wrapper').hide();
+	}
+	
+	$('#user_external_auth').click(function() {
+	  if ($(this).is(':checked')) {
+	    $('tr.password-wrapper').hide();
+	  } else {
+	    $('tr.password-wrapper').show();
+	  }
+	});
+  
+	
 	// Helps provide an easy way to show confirm windows
 	// on any link easily using the attribute data-confirm-message
 	$('a').click(function() {
