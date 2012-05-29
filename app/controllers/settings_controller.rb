@@ -12,7 +12,7 @@ class SettingsController < AdminController
     @setting = Setting.find(params[:id])
 
     respond_to do |format|
-      @setting.update_attributes(:value => params[:setting][:value])
+      @setting.update_attributes(:value => params[:setting][:view_value])
       format.json { respond_with_bip(@setting) }
     end
   end

@@ -6,7 +6,7 @@ class Setting < ActiveRecord::Base
   
   serialize :options
   
-  # Override value output only if boolean
+  # Override value output only if boolean is expected
   # Necessary to work with the best_in_place evaluation for checkbox input
   def view_value
     self.input_type.eql?("boolean") ? self[:value].to_bool : self[:value]

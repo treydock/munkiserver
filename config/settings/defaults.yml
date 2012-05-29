@@ -11,6 +11,9 @@ cas_authentication:
   use_ssl:
     value: "true"
     input_type: "boolean"
+  mail_domain:
+    value: ""
+    input_type: "string"
 ldap_authentication:
   host:
     value: ""

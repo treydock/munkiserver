@@ -88,13 +88,17 @@ class User < ActiveRecord::Base
   # Check on user for omniauth-cas
   ##########
   def self.find_for_cas_oauth(access_token, signed_in_resource=nil)
+    @cas_settings = Setting.by_category("cas_authentication")
     data = access_token.extra
+
     if user = User.where(:username => data.user).first
       user
     else # Create a user with a stub password. 
-# NOTE: Need to add option to set default email suffix so validation passes with a good email
-# when creating new user via this method
-      User.create!(:username => data.user, :password => Devise.friendly_token[0,20]) 
+      User.create!(
+        :username => data.user,
+        :email => "#{data.user}@#{@cas_settings.get_setting(:mail_domain)}",
+        :password => Devise.friendly_token[0,20]
+      ) 
     end
   end
 
