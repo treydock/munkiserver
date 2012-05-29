@@ -79,25 +79,6 @@ module PrivilegeGranter
   def destroy_packages(unit_ids)
     can :destroy, Package, :unit_id => unit_ids
   end
-  
-  # ===============
-  # = Permissions =
-  # ===============
-  def read_permissions(unit_ids)
-    can [:read, :edit], Permission, :unit_id => unit_ids
-  end
-
-  def modify_permissions(unit_ids)
-    can [:update, :destroy], Permission, :unit_id => unit_ids
-  end
-  
-  def read_system_permissions(unit_ids)
-    can [:read, :edit], Permission, :unit_id => nil
-  end
-  
-  def modify_system_permissions(unit_ids)
-    can [:update, :destroy], Permission, :unit_id => nil
-  end
 
   # =========
   # = Users =
@@ -155,4 +136,49 @@ module PrivilegeGranter
   def destroy_user_groups(unit_ids)
     can :destroy, UserGroup, :unit_id => unit_ids
   end
+  
+  # ===================
+  # = Global Settings =
+  # ===================
+  
+  def read_global_settings(unit_ids)
+    can [:read], Setting
+  end
+  
+  def modify_global_settings(unit_ids)
+    can [:update], Setting
+  end
+  
+  # ======================
+  # = Package Categories =
+  # ======================
+  
+  def read_package_categories(unit_ids)
+    can [:read, :edit], PackageCategory
+  end
+  
+  def modify_package_categories(unit_ids)
+    can [:update, :destroy], PackageCategory
+  end
+  
+  # ===============
+  # = Permissions =
+  # ===============
+  def read_permissions(unit_ids)
+    can [:read, :edit], Permission, :unit_id => unit_ids
+  end
+
+  def modify_permissions(unit_ids)
+    can [:update, :destroy], Permission, :unit_id => unit_ids
+  end
+  
+  def read_system_permissions(unit_ids)
+    can [:read, :edit], Permission, :unit_id => nil
+  end
+  
+  def modify_system_permissions(unit_ids)
+    can [:update, :destroy], Permission, :unit_id => nil
+  end
+  
+  
 end

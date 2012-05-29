@@ -270,4 +270,16 @@ module ApplicationHelper
   def is_admin_namespace?
     request.fullpath.split("/").second == "admin"
   end
+  
+  # Sets link to admin tab based on ability
+  def link_to_admin_namespace
+    if can? :read, Setting
+      path = admin_settings_path
+    elsif can? :read, PackageCategory
+      path = admin_package_categories_path
+    elsif can? :read, Permission
+      path = admin_permissions_path
+    end
+    link_to("Admin", path)
+  end
 end

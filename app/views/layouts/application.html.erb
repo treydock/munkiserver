@@ -57,9 +57,9 @@
 				<li class="dir">
 					<%= link_to "Dashboard", dashboard_path %>
 				</li>
-				<% if can? :manage, :admin %>
+				<% if can? :read, :admin %>
 					<li class="dir">
-						<%= link_to "Admin", admin_settings_path %>
+						<%= link_to_admin_namespace %>
 					</li>
 				<% end %>
 				<% if user_signed_in? %>
@@ -147,9 +147,15 @@
     <% if is_admin_namespace? %>
       <%= content_tag :div, :id => "admin_tabs" do %>
         <%= tabs_tag(:builder => MenuTabsBuilder) do |tab| %>
-          <%= tab.settings   "Settings", admin_settings_path %>
-          <%= tab.package_categories   "Package Categories", package_categories_path %>
-          <%= tab.permissions   "Permissions", permissions_path %>
+          <% if can? :read, Setting %>
+            <%= tab.settings   "Settings", admin_settings_path %>
+          <% end %>
+          <% if can? :read, PackageCategory %>
+            <%= tab.package_categories   "Package Categories", package_categories_path %>
+          <% end %>
+          <% if can? :read, Permission %>
+            <%= tab.permissions   "Permissions", admin_permissions_path %>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

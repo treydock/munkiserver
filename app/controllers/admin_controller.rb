@@ -12,6 +12,6 @@ class AdminController < ApplicationController
   
   private
   def authorize_resource
-    authorize! params[:action], :admin
+    authorize! params[:action].to_sym, :admin
   end
 end

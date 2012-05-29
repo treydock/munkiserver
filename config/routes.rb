@@ -91,9 +91,9 @@ Munki::Application.routes.draw do
     end
     resources :package_categories
 
-    match "permissions" => "permissions#index", :as => "permissions", :via => "GET"
-    match "permissions/edit/:principal_pointer(/:unit_id)" => "permissions#edit", :as => "edit_permissions", :via => "GET"
-    match "permissions" => "permissions#update", :as => "update_permissions", :via => "PUT"
+    match "permissions" => "permissions#index", :as => "admin_permissions", :via => "GET"
+    match "permissions/edit/:principal_pointer(/:unit_id)" => "permissions#edit", :as => "edit_admin_permissions", :via => "GET"
+    match "permissions" => "permissions#update", :as => "update_admin_permissions", :via => "PUT"
   end
   
 

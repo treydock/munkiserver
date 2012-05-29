@@ -19,6 +19,6 @@ class SettingsController < AdminController
 
   private
   def authorize_resource
-    authorize! params[:action], :settings
+    authorize! params[:action].to_sym, Setting
   end
 end

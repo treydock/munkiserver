@@ -3,9 +3,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable, :recoverable and :omniauthable
-  devise :database_authenticatable, :omniauthable,
-#  devise :database_authenticatable,
-         :rememberable, :trackable, :validatable #, :authentication_keys => [ :username ]
+  devise :database_authenticatable, :omniauthable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :username
@@ -13,12 +11,12 @@ class User < ActiveRecord::Base
   alias :devise_valid_password? :valid_password?
 
   validates_length_of :username, :within => 3..40
-#  validates_length_of :password, :in => 5..24, :if => :password_changed?, :message => "must be between 5-24 characters"
+#  validates_length_of :password, :in => 5..24, :if => :password_required?, :message => "must be between 5-24 characters"
   validates_presence_of :username, :email
-#  validates_presence_of :salt, :message => "is missing. New users require a password."
-#  validates_presence_of :password, :password_confirmation, :if => :password_changed?
+#  validates_presence_of :salt, :if => :password_required?, :message => "is missing. New users require a password."
+#  validates_presence_of :password, :password_confirmation, :if => :password_required?
   validates_uniqueness_of :username, :email
-#  validates_confirmation_of :password, :if => :password_changed?
+#  validates_confirmation_of :password, :if => :password_required?
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "address doesn't look valid"
   
   attr_protected :id, :salt
@@ -42,31 +40,11 @@ class User < ActiveRecord::Base
     1.upto(len) { |i| s << c[rand(c.size-1)] }
     return s
   end
-  
-=begin
-  # Combine the pass and salt and return an encrypted string
-  def self.encrypt(pass, salt)
-    Digest::SHA1.hexdigest(pass + salt)
-  end
-  
-  # Did the password change since our last save?
-  def password_changed?
-    hashed_password_changed?
-  end
 
-  def password=(pass)
-    @password = pass
-    unless @password.blank?  
-      self.salt = User.random_string(10) unless self.salt?
-      self.hashed_password = User.encrypt(@password, self.salt)
-    end
+  # Devise method to not require password if using external authentication
+  def password_required?
+    (!self.external_auth || !password.blank?) && super
   end
-  
-  def self.authenticate(username, pass)
-    u = find_by_username(username)
-    return u if (u != nil) and (User.encrypt(pass, u.salt) == u.hashed_password)
-  end
-=end
 
   ##########
   # Check if user is using a valid devise password

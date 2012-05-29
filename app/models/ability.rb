@@ -15,6 +15,11 @@ class Ability
       grant_privilege(Privilege.find(privilege_id),permissions.map(&:unit_id))
     end
     
+    # Base access to admin interface on sub sections :read ability
+    if can?(:read, Setting) or can?(:read, Permission) or can?(:read, PackageCategory)
+      can [:read], :admin
+    end
+    
     # Give "admin" user the keys to the house
     if @user.is_root?
       can :manage, :all
@@ -23,7 +28,7 @@ class Ability
   
   def grant_privilege(privilege,unit)
     self.send(privilege.name,unit)
-  end
+  end  
   
   # Permit certain things to all requests
   def permit_unprotected_actions

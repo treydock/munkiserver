@@ -19,7 +19,7 @@ class PermissionsController < AdminController
     
     respond_to do |format|
       if flash[:error].present?
-        format.html { redirect_to permissions_path }
+        format.html { redirect_to admin_permissions_path }
         format.js { render :partial => "shared/flash", :locals => {:flash => flash} }
       else
         format.html
