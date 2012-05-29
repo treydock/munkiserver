@@ -93,12 +93,16 @@ class User < ActiveRecord::Base
 
     if user = User.where(:username => data.user).first
       user
-    else # Create a user with a stub password. 
+    elsif @cas_settings.get_setting(:create_new_users).to_bool # Create a user with a stub password if enabled
       User.create!(
         :username => data.user,
         :email => "#{data.user}@#{@cas_settings.get_setting(:mail_domain)}",
         :password => Devise.friendly_token[0,20]
-      ) 
+      )
+    else
+      @user = User.new
+      @user.errors[:base] << "You account was not found."
+      @user
     end
   end
 
