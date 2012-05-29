@@ -11,12 +11,12 @@ class User < ActiveRecord::Base
   alias :devise_valid_password? :valid_password?
 
   validates_length_of :username, :within => 3..40
-#  validates_length_of :password, :in => 5..24, :if => :password_required?, :message => "must be between 5-24 characters"
+  validates_length_of :password, :in => 5..24, :if => :password_required?, :message => "must be between 5-24 characters"
   validates_presence_of :username, :email
-#  validates_presence_of :salt, :if => :password_required?, :message => "is missing. New users require a password."
-#  validates_presence_of :password, :password_confirmation, :if => :password_required?
+  validates_presence_of :salt, :if => :password_required?, :message => "is missing. New users require a password."
+  validates_presence_of :password, :password_confirmation, :if => :password_required?
   validates_uniqueness_of :username, :email
-#  validates_confirmation_of :password, :if => :password_required?
+  validates_confirmation_of :password, :if => :password_required?
   validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "address doesn't look valid"
   
   attr_protected :id, :salt
@@ -41,9 +41,9 @@ class User < ActiveRecord::Base
     return s
   end
 
-  # Devise method to not require password if using external authentication
+  # Do not require password if using external authentication
   def password_required?
-    (!self.external_auth || !password.blank?) && super
+    !self.external_auth
   end
 
   ##########
